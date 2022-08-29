@@ -1,12 +1,13 @@
 import express, { NextFunction, Request, Response } from 'express'
-import { getTweets } from '../controllers';
+import { fetchHashtagsByTopic, fetchTweetsbyHashtag } from '../controllers';
 
 const router = express.Router();
 
-router.get('/tweet', getTweets)
+router.get('/tweets', fetchTweetsbyHashtag);
+router.get('/hashtags/:search_keyword', fetchHashtagsByTopic);
 
 router.get('/', (req: Request, res: Response, next: NextFunction) => {
-    res.json({ message: 'Twitter Router Called!' })
+    res.json({ message: 'Twitter Router Called!' });
 });
 
 export { router as TwitterRoute }
