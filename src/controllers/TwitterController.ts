@@ -40,7 +40,7 @@ export const fetchHashtagsByTopic = async (req: Request, res: Response, next: Ne
 
         const tweetData = result['_realData']['data'];
         tweetData?.forEach((item: any) => {
-            if (item.entities.hashtags)
+            if (item.entities && item.entities.hashtags)
                 allHashTags.push(...item.entities.hashtags);
         })
 
