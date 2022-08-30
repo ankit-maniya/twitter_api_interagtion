@@ -3,6 +3,16 @@ import { NextFunction, Request, Response } from "express";
 import { errorRes, successRes, removeDubFromArray } from "../helpers";
 import { twitterClient } from "../services/Twitter";
 
+
+/**
+  * This All functions are used for fetch data as required
+  * @function me
+  * @param { Object | Array | String | Number } req
+  * @param { Object | Array | String | Number } res
+  * @param { } next apply for go to next function 
+  * @returns { Object } return the meta for Send Success & Response
+*/
+
 export const fetchTweetsbyHashtag = async (req: Request, res: Response, next: NextFunction) => {
     try {
         // const onlyMinimumDetails = await twitterClient.v2.get('tweets/search/recent?query=%23cricket&tweet.fields=entities', { max_results: 10 });
@@ -24,6 +34,10 @@ export const fetchTweetsbyHashtag = async (req: Request, res: Response, next: Ne
 
         res.json(successRes(result));
     } catch (error) {
+        if(error instanceof TypeError) {
+            return res.json(errorRes(`${error.message}-${error.name}`));
+        }
+
         res.json(errorRes('Error!', error));
     }
 }
@@ -38,7 +52,7 @@ export const fetchHashtagsByTopic = async (req: Request, res: Response, next: Ne
 
         const result = <any>await tweeterSearchApi(`${search_keyword}`); // Fetch tweets based on hashtags
 
-        const tweetData = result['_realData']['data'];
+        const tweetData = result['_realData']['data']; // .(Dot) syntax not working
         tweetData?.forEach((item: any) => {
             if (item.entities && item.entities.hashtags)
                 allHashTags.push(...item.entities.hashtags);
@@ -49,6 +63,10 @@ export const fetchHashtagsByTopic = async (req: Request, res: Response, next: Ne
         const updatedData = removeDubFromArray(allHashTags);
         res.json(successRes(updatedData));
     } catch (error) {
+        if(error instanceof TypeError) {
+            return res.json(errorRes(`${error.message}-${error.name}`));
+        }
+
         res.json(errorRes('Error!', error));
     }
 }
