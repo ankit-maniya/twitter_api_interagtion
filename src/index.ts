@@ -1,7 +1,7 @@
 import express from 'express'
 
-import App from './services/ExpressApp'
-import connectDb from './services/Database'
+import App from './services/ExpressApp.Service'
+import connectDb from './services/Database.Service'
 
 import { PORT } from './configs';
 

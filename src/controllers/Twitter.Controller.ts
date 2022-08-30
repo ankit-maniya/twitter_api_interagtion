@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 
 import { errorRes, successRes, removeDubFromArray } from "../helpers";
-import { twitterClient } from "../services/Twitter";
+import { twitterClient } from "../services";
 
 
 /**
